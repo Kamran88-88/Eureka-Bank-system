@@ -1,0 +1,69 @@
+﻿<Window  Background="{StaticResource ProqramColor}" x:Class="Eureka_Bank_system.Views.ClientSerchView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Eureka_Bank_system.Views"
+        xmlns:ViewModels="clr-namespace:Eureka_Bank_system.ViewModels"
+        mc:Ignorable="d"
+        Title="ClientSerchView" Height="450" Width="800">
+    <!--<Window.DataContext>
+        <ViewModels:ClientSerchViewModel></ViewModels:ClientSerchViewModel>
+    </Window.DataContext>-->
+    
+    <GroupBox >
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <GroupBox Header="Axtarış paneli">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <Label>Soyadı:</Label>
+                            <Label>Adı:</Label>
+                            <Label>Ata adı:</Label>
+                        </StackPanel>
+                        <StackPanel Width="120">
+                            <TextBox Text="{Binding Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBox Text="{Binding Father_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,0">
+                            <Label>Müştəri kodu:</Label>
+                            <Label>Fin kod:</Label>
+                            <!--<Label>Ş.V. nömrəsi:</Label>-->
+                        </StackPanel>
+                        <StackPanel Width="120">
+                            <TextBox Text="{Binding Client_Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBox Text="{Binding Fin_Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <!--<TextBox></TextBox>-->
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header=" ">
+                    <StackPanel Width="320">
+                        <Button HorizontalAlignment="Left" Command="{Binding SerchCommand}" IsDefault="True">Axtar</Button>
+                        <Button HorizontalAlignment="Left" Command="{Binding OpenClientTableCommand}" CommandParameter="Yarat" >Yarat</Button>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+            <DataGrid Margin="5" Grid.Row="1" ItemsSource="{Binding ClientSerchResult, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedPerson,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" IsReadOnly="True" GridLinesVisibility="None">
+                <DataGrid.InputBindings>
+                    <MouseBinding CommandParameter="Ətraflı" Gesture="LeftDoubleClick" Command="{Binding SelectCommand}"/>
+                </DataGrid.InputBindings>
+                
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Width="1.3*" Binding="{Binding FullName}" Header="S.A.A"/>
+                    <DataGridTextColumn Width="0.6*" Binding="{Binding ClientCode}" Header="Müştəri kodu"/>
+                    <DataGridTextColumn Width="0.5*" Binding="{Binding FinCode}" Header="Fin kod"/>
+                    <DataGridTextColumn Width="2*" Binding="{Binding WorkPlaces[0].Name}" Header="İş yeri"/>
+                    <DataGridTextColumn Width="*" Binding="{Binding WorkPlaces[0].Profession}" Header="Peşəsi"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </GroupBox>
+</Window>

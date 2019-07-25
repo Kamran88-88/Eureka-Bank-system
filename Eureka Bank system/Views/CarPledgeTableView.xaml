@@ -1,0 +1,49 @@
+﻿<Window Background="{StaticResource ProqramColor}" x:Class="Eureka_Bank_system.Views.CarPledgeTableView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Eureka_Bank_system.Views"
+        mc:Ignorable="d"
+        Title="CarPledgeTableView" Height="450" Width="800">
+    <GroupBox >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="360"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="Girov qoyan" Grid.ColumnSpan="3">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Width="300" Margin="6" IsReadOnly="True" Text="{Binding Car.Pledger.FullName, Mode=TwoWay}"></TextBox>
+                    <Button Command="{Binding ChangePledgerCommand}">Dəyiş</Button>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Girovun rekvizitləri" Grid.Column="0" Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" >
+                        <Label>Adı:</Label>
+                        <Label>İstehsalçının adı:</Label>
+                        <Label>Girov dəyəri:</Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="1">
+                        <TextBox Text="{Binding Car.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Text="{Binding Car.Manufacturer, Mode=TwoWay}"></TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding Car.Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150"></TextBox>
+                            <ComboBox Width="63.2" Height="21" ItemsSource="{Binding Currencies}" Text="{Binding Car.Currency, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <Button Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" Command="{Binding SaveCommand}">Save</Button>
+        </Grid>
+    </GroupBox>
+</Window>

@@ -1,0 +1,150 @@
+﻿<UserControl x:Class="Eureka_Bank_system.Views.NagdIstehlakView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Eureka_Bank_system.Views"
+             mc:Ignorable="d" 
+             xmlns:ViewModels="clr-namespace:Eureka_Bank_system.ViewModels"
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <ViewModels:Nagd_istehlak_ViewModel></ViewModels:Nagd_istehlak_ViewModel>
+    </UserControl.DataContext>
+
+        <Grid Background="{StaticResource ProqramColor}"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="550"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Sistemə vurulmamış kreditlər" Margin="5,0,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label>Kreditlərin siyahısı</Label>
+                <ComboBox Grid.Column="1"></ComboBox>
+            </Grid>
+
+        </GroupBox>
+        <GroupBox Header="Müştəri" Grid.Column="0" Grid.Row="1" Margin="5,0,0,0" >
+            <Grid  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label>Müştəri kodu:</Label>
+                    <Label>S.A.A:</Label>
+                    <Label>Rəsmi gəliri</Label>
+                    <Label>Ümumi xərcləri</Label>
+                    <Label>İş yeri</Label>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBox Text="{Binding StaticPerson.ClientCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter"  Command="{Binding EnterTextboxCommand}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <TextBox Text="{Binding StaticPerson.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"></TextBox>
+
+                    <TextBox IsEnabled="False" Text="{Binding StaticPerson.TotalOffiialIncome}" ></TextBox>
+
+
+                    <TextBox IsEnabled="False" Text="{Binding StaticPerson.TotalOffiialOutcome}" ></TextBox>
+                    <TextBox IsEnabled="False" Text="{Binding StaticPerson.FirsWorkName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+                </StackPanel >
+                <StackPanel Grid.Column="2">
+                    <Button Command="{Binding PersonTableCommand}" CommandParameter="Ətraflı">Ətraflı</Button>
+                    <Button Command="{Binding OpenSerchTableCommand}"
+                            CommandParameter="Axtar">Axtar</Button>
+                    <Button  Command="{Binding PersonTableCommand}" CommandParameter="Yarat">Yarat</Button>
+                </StackPanel >
+
+            </Grid>
+        </GroupBox>
+       
+        <GroupBox Header="Kredit" Grid.Column="0" Grid.Row="2" Margin="5,0,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="160"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label>Kredit məhsulu:</Label>
+                    <Label>Kampaniya:</Label>
+                    <Label>Kredit məbləği</Label>
+                    <Label>İllik faiz dərəcəsi</Label>
+                    <Label>Kredit müddəti</Label>
+                   
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <ComboBox ItemsSource="{Binding LoanProducts}" DisplayMemberPath="Name"></ComboBox>
+                    <TextBox IsEnabled="False"></TextBox>
+                    <TextBox Text="{Binding Loan.Sum, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+                    <TextBox Text="{Binding Loan.Rate}"></TextBox>
+                    <ComboBox Text="{Binding Loan.Period, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Periods}"></ComboBox>
+                  
+                </StackPanel>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="83"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Command="{Binding OpenPromotionTableCommand}" Grid.Row="0">Seç</Button>
+                    
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Təminat" Grid.Column="0" Grid.Row="3" Margin="5,0,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" VerticalAlignment="Center">Təminat(lar)</Label>
+                <TextBox Grid.Column="1" IsEnabled="False"></TextBox>
+                <Button Grid.Column="2" Command="{Binding OpenProcuringTableCommand}">Seç</Button>
+            </Grid>
+
+        </GroupBox>
+        <GroupBox Header="Save" Grid.Column="0" Grid.Row="4" Margin="5,0,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label>Annuitet ödəniş</Label>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBox></TextBox>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <Button Command="{Binding OpenSchedulePaymentCommand}" >Ödəniş cədvəli</Button>
+                    <Button Margin="3,22,3,1">Save</Button>
+                </StackPanel>
+                
+            </Grid>
+            
+        </GroupBox>
+            
+    </Grid>
+</UserControl>

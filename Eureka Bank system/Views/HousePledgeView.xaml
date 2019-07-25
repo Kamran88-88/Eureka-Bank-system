@@ -1,0 +1,85 @@
+﻿<Window Background="{StaticResource ProqramColor}" x:Class="Eureka_Bank_system.Views.HousePledgeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Eureka_Bank_system.Views"
+        mc:Ignorable="d"
+        Title="HousePledgeView" Height="480" Width="803">
+    <GroupBox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="0.8*"/>
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0" Header="">
+                    <Button Command="{Binding OpenClientSerchTableCommand}" VerticalAlignment="Center">Əlavə et</Button>
+                </GroupBox>
+                <GroupBox Grid.Row="1">
+                    <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedPerson, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding House.Pledgers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                        <DataGrid.InputBindings>
+                            <MouseBinding CommandParameter="Ətraflı" Gesture="LeftDoubleClick" Command="{Binding ShowDetailCommand}"/>
+                        </DataGrid.InputBindings>
+                        
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="230" Header="Girov qoyan(lar)" Binding="{Binding FullName}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                    
+                </GroupBox>
+                <GroupBox Grid.Row="2">
+                    <Button Command="{Binding SaveCommand}" VerticalAlignment="Bottom">Save</Button>
+                </GroupBox>
+            </Grid>
+            <GroupBox Grid.Column="0" Grid.Row="0" Header="Rekvizitlər">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" >
+                        <Label>Ünvanı:</Label>
+                        <Label Height="28">Yerləşdiyi şəhər:</Label>
+                        <Label Height="28" >Yerləşdiyi rayon:</Label>
+                        <Label Height="28">Tikilinin növü:</Label>
+                        <Label Height="28">Mülkiyyət növü:</Label>
+                    </StackPanel>
+                    <StackPanel  Grid.Column="1">
+                        <TextBox Text="{Binding House.Address.Adress, Mode=TwoWay}"></TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <ComboBox Text="{Binding House.Address.City,Mode=TwoWay}" Name="CityWidth" Width="118" DisplayMemberPath="City" ItemsSource="{Binding Cities, Mode=TwoWay}"></ComboBox>
+                                <ComboBox Text="{Binding House.Address.Region}"  DisplayMemberPath="Region" ItemsSource="{Binding Regions}"></ComboBox>
+
+                                <ComboBox Text="{Binding House.TypeOfBuilding}" ItemsSource="{Binding TypesOfBuilding}" ></ComboBox>
+                                <ComboBox Text="{Binding House.TypeOfOwnerShip}" ItemsSource="{Binding TypesOfOwnerShip}"></ComboBox>
+                            </StackPanel>
+                            <StackPanel Margin="39,0,0,0" Orientation="Vertical">
+                                <Label  Height="27">Bazar dəyəri:</Label>
+                                <Label >Girov dəyəri:</Label>
+                                <Label>Valyuta:</Label>
+                                <Label>Sahəsi:</Label>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBox Text="{Binding House.Price}" Margin="0,4" Width="{Binding ElementName=CityWidth, Path=Width}"></TextBox>
+                                <TextBox Text="{Binding House.PledgePrice}" Width="{Binding ElementName=CityWidth, Path=Width}"></TextBox>
+                                <ComboBox Text="{Binding House.Currency}" ItemsSource="{Binding Currencies}" Width="{Binding ElementName=CityWidth, Path=Width}"></ComboBox>
+                                <TextBox Text="{Binding House.Area}" Width="{Binding ElementName=CityWidth, Path=Width}"></TextBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+        </Grid>
+    </GroupBox>
+</Window>

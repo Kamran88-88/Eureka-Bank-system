@@ -1,0 +1,285 @@
+﻿<Window ShowInTaskbar="True" Background="{StaticResource ProqramColor}" x:Class="Eureka_Bank_system.Views.Client_table"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Eureka_Bank_system.Views"
+        mc:Ignorable="d"
+         xmlns:ViewModels="clr-namespace:Eureka_Bank_system.ViewModels"
+        Title="Client_table" Height="520" Width="831">
+
+    <GroupBox Background="{StaticResource ProqramColor}" Margin="5">
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="228*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="207*"/>
+                <RowDefinition Height="26*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Column="0" Grid.Row="0" Header="Fiziki şəxs" Margin="5,5,4.8,4.8" Grid.RowSpan="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.8*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="8*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                        <RadioButton Command="{Binding CheckedCommand}" Content="Fiziki şəxs" IsChecked="{Binding Person1.CheckedIndividual}"></RadioButton>
+                        <RadioButton Command="{Binding CheckedCommand}" Content="Fərdi sahibkar" IsChecked="{Binding Person1.CheckedIndividualOwner}" Margin="75,0,0,0"></RadioButton>
+                    </StackPanel>
+                    <StackPanel Grid.Column="0" Grid.Row="1">
+
+                        <Label>Müştəri kodu:</Label>
+                        <Label>VÖEN:</Label>
+                        <Label>FİN kod:</Label>
+                        <Label>Soyadı:</Label>
+                        <Label>Adı:</Label>
+                        <Label>Ata adı:</Label>
+                        <Label>Doğum tarixi:</Label>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Grid.Row="1">
+                        <TextBox Text="{Binding Person1.ClientCode,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ClientCodeEditable}"></TextBox>
+                        <TextBox Text="{Binding Person1.TIN,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Text="{Binding Person1.FinCode,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Text="{Binding Person1.Surname,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Text="{Binding Person1.Name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Text="{Binding Person1.Father_name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <DatePicker Grid.Column="0" SelectedDate="{Binding Person1.BirthDay,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+                            <ComboBox Grid.Column="1" ItemsSource="{Binding Sexes,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Text="{Binding Person1.Sex}"></ComboBox>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Şəxsiyyət vəsiqəsi" Grid.Column="1" Grid.Row="0" Margin="5.2,5,4.6,4.8" Grid.RowSpan="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Margin="1.9"></TextBlock>
+                        <Label>Seriya:</Label>
+                        <Label>Nömrə:</Label>
+                        <Label>Verən orqan:</Label>
+                        <Label>Verilmə tarixi:</Label>
+                        <Label>Bitmə tarixi:</Label>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Margin="1.9"></TextBlock>
+                        <TextBox Text="{Binding Person1.Passport.Seria}"></TextBox>
+                        <TextBox Text="{Binding Person1.Passport.Number}"></TextBox>
+                        <TextBox Text="{Binding Person1.Passport.Organization}"></TextBox>
+                        <DatePicker SelectedDate="{Binding Person1.Passport.StartDate}"></DatePicker>
+                        <DatePicker SelectedDate="{Binding Person1.Passport.EndDate}"></DatePicker>
+                    </StackPanel>
+                </Grid>
+
+            </GroupBox>
+
+            <TabControl Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0.2,-0.4,26" Grid.RowSpan="2">
+                <TabItem Header="Ünvanlar">
+                    <DataGrid  ItemsSource="{Binding Person1.Adresses}" AutoGenerateColumns="False" CanUserAddRows="False" SelectionUnit="Cell">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Ünvan" Width="*" Binding="{Binding Adress}"/>
+
+                            <!--DataGridCombobox-->
+                            <DataGridComboBoxColumn Header="Tip" Width="*" SelectedValueBinding="{Binding AdressType}"
+                                                    DisplayMemberPath="AdressType"
+                                                    SelectedValuePath="AdressType">
+
+                                <DataGridComboBoxColumn.ElementStyle >
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.AddressTypes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.AddressTypes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                        <!--<Setter Property="IsEditable" Value="True"/>-->
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+                            <!--DataGridCombobox-->
+
+
+                            <DataGridComboBoxColumn Header="Şəhər" Width="*" SelectedValueBinding="{Binding City}"
+                                                    DisplayMemberPath="City"
+                                                    SelectedValuePath="City">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Cities, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Cities, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+
+                            <DataGridComboBoxColumn Header="Rayon" Width="*" SelectedValueBinding="{Binding Region}"
+                                                    DisplayMemberPath="Region"
+                                                    SelectedValuePath="Region">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Regions, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Regions, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+
+
+                            <!--<DataGridTextColumn Header="Ölkə" Width="*" Binding="{Binding Country}"/>-->
+                            <DataGridComboBoxColumn Header="Ölkə" Width="*" SelectedValueBinding="{Binding Country}"
+                                                    DisplayMemberPath="Country"
+                                                    SelectedValuePath="Country">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Countries, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Countries, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Əlaqə">
+                    <DataGrid ItemsSource="{Binding Person1.Phones}" SelectionUnit="Cell" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Tip" Width="60" Binding="{Binding PhoneType}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Telefon" Width="150" Binding="{Binding Number}"/>
+                            <DataGridTextColumn Header="Əlaqəli şəxsin adı" Width="250" Binding="{Binding NumberOwner}"/>
+                            <DataGridTextColumn Header="Qohumluluq dərəcəsi" Width="*" Binding="{Binding KinshipRate}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Sənədlər">
+
+                </TabItem>
+                <TabItem Header="İş yerləri">
+                    <DataGrid SelectionUnit="Cell" AutoGenerateColumns="False" ItemsSource="{Binding Person1.WorkPlaces}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Adı" Width="250" Binding="{Binding Name}"/>
+
+                            <DataGridComboBoxColumn Header="Rəsmiyyət" Width="*" SelectedValueBinding="{Binding Legal}"
+                                                    DisplayMemberPath="Legal"
+                                                    SelectedValuePath="Legal">
+
+                                <DataGridComboBoxColumn.ElementStyle >
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Legals, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Legals, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                        <!--<Setter Property="IsEditable" Value="True"/>-->
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+
+                            <DataGridComboBoxColumn Header="Sahə" Width="100" SelectedValueBinding="{Binding Area}"
+                                                    DisplayMemberPath="Area"
+                                                    SelectedValuePath="Area">
+
+                                <DataGridComboBoxColumn.ElementStyle >
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Areas, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Areas, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                        <!--<Setter Property="IsEditable" Value="True"/>-->
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+                            <!--<DataGridTextColumn Header="Kateqoriya" Width="100" Binding="{Binding Category}"/>-->
+                            <DataGridTextColumn Header="Peşəsi" Width="200" Binding="{Binding Profession}"/>
+                            <DataGridTextColumn Header="Maaşı" Width="*" Binding="{Binding Salary}"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Gəlir/Xərclər">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid Grid.Column="0" ItemsSource="{Binding Person1.PersonIncomeOutcomes}" SelectionUnit="Cell">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Gəlir" Width="*" Binding="{Binding Income, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="Açıqlama" Width="3*" Binding="{Binding IncomeExplanation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding Person1.PersonIncomeOutcomes}" SelectionUnit="Cell">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Xərc" Width="*" Binding="{Binding Outcome, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Header="Açıqlama" Width="3*"  Binding="{Binding OutcomeExplanation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+
+                </TabItem>
+                <TabItem Header="Qeyd">
+                    <Grid Background="{StaticResource ProqramColor}">
+                        <TextBox  Height="115" Text="{Binding Person1.Note}" VerticalContentAlignment="Top" HorizontalContentAlignment="Left"></TextBox>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Aktiv kreditləri">
+                    <DataGrid SelectionUnit="Cell" IsReadOnly="True" ItemsSource="{Binding Person1.Debts}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Verilən məbləğ"  Binding="{Binding InitialAmount}"/>
+                            <DataGridTextColumn Header="Ümumi əsas borc" Binding="{Binding PrincipalAmount}"/>
+                            <DataGridTextColumn Header="Ümumi faiz borc" Binding="{Binding PercentageAmount}"/>
+                            <DataGridTextColumn Header="Cərimə" Binding="{Binding PenaltyAmount}"/>
+                            <DataGridTextColumn Header="Gecikən əsas borc" Binding="{Binding OverduePrincipalDebt}"/>
+                            <DataGridTextColumn Header="Gecikən faiz borc" Binding="{Binding OverduePercentageDebt}"/>
+                            <DataGridTextColumn Header="Ödənilməli məbləğ" Binding="{Binding PayableDebt}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <!--<TabItem Header="Aktiv zaminliklər" >
+                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Person1.PersonGuaranties}" CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Borc alanın adı" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Müştəri kodu" Binding="{Binding ClientCode}"/>
+                            <DataGridTextColumn Header="Verilən məbləğ" Binding="{Binding InitialAmount}"/>
+                            <DataGridTextColumn Header="Ümumi qalıq əsas borc" Binding="{Binding PrincipalAmount}"/>
+                            <DataGridTextColumn Header="Kredit üzrə gecikmə günləri" Binding="{Binding OverdueDays}"/>
+                            <DataGridTextColumn Header="Verilmə tarixi" Binding="{Binding Passport.StartDate}"/>
+                            <DataGridTextColumn Header="Bitmə tarixi" Binding="{Binding Passport.EndDate}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>-->
+            </TabControl>
+            <Button Command="{Binding SaveCommand}" Grid.Row="3" Grid.Column="1" Content="Yadda saxla" Margin="0,3.4,2.6,3"/>
+        </Grid>
+    </GroupBox>
+</Window>
